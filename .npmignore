@@ -3,7 +3,9 @@
 /src
 /out/test
 /images
+/bin
 tsconfig.json
+.editorconfig
 .eslintignore
 .eslintrc.js
 .github
@@ -13,8 +15,6 @@ tsconfig.json
 jest.*
 .DS_Store
 coverage
-winuaebootlog.txt
-winuaelog.txt
 *.uss
 *.cache
 *.vsix
