@@ -30,29 +30,30 @@ import {
   NumberFormat,
   replaceAsync,
 } from "./utils/strings";
-import { Emulator, EmulatorType, RunOptions } from "./emulator";
+import { Emulator, Mame, RunOptions } from "./emulator";
 import VariableManager, {
   MemoryFormat,
   ScopeType,
   SourceConstantResolver,
 } from "./variableManager";
 import { VasmOptions, VasmSourceConstantResolver } from "./vasm";
-import { parseHunksFromFile } from "./amigaHunkParser";
+import { parseVlinkMappingsFile } from "./vlinkMappingsParser";
 import SourceMap from "./sourceMap";
 import { DisassemblyManager } from "./disassembly";
 import { Threads } from "./hardware";
 import StackManager from "./stackManager";
 import promiseRetry from "promise-retry";
 import { helpSummary, commandHelp } from "./help";
+import { Section } from "./sections";
 
 /**
  * Additional arguments for launch/attach request
  */
 interface CustomArguments {
-  /** Local path of target Amiga binary */
-  program: string;
-  /** Remote path of target Amiga binary (default: SYS:{basename of program}) */
-  remoteProgram?: string;
+  /** Local path of ROM */
+  program?: string;
+  /** Local path of a vlink mappings text file */
+  mappings?: string;
   /** Automatically stop target after launch (default: false) */
   stopOnEntry?: boolean;
   /** Enable verbose logging (default: false) */
@@ -72,8 +73,6 @@ interface CustomArguments {
 export interface LaunchRequestArguments
   extends DebugProtocol.LaunchRequestArguments,
     CustomArguments {
-  /** Emulator program type (default: winuae for windows, fs-uae for other platforms) */
-  emulatorType?: EmulatorType;
   /** Path of emulator executable (default: use bundled version) */
   emulatorBin?: string;
   /** Additional CLI args to pass to emulator program. Remote debugger args are added automatically */
@@ -101,6 +100,7 @@ export interface DisassembledFileContentsRequest {
  */
 const defaultArgs = {
   program: undefined,
+  mappings: undefined,
   remoteProgram: undefined,
   stopOnEntry: false,
   trace: false,
@@ -108,7 +108,6 @@ const defaultArgs = {
   serverName: "localhost",
   serverPort: 2345,
   emulatorBin: undefined,
-  emulatorType: process.platform === "win32" ? "winuae" : "fs-uae",
   emulatorArgs: [],
   memoryFormats: {
     watch: {
@@ -251,14 +250,13 @@ export class UAEDebugSession extends LoggingDebugSession {
 
       // Start the emulator
       if (startEmulator) {
-        this.emulator = Emulator.getInstance(args.emulatorType as EmulatorType);
-        // Program is required when debugging
-        if (debug && !args.remoteProgram) {
-          throw new Error("Missing remoteProgram argument in launch request");
+        this.emulator = new Mame();
+        // Either program or mappings is required when debugging
+        if (debug && !args.mappings) {
+          throw new Error("Missing mapping argument in launch request");
         }
-        // Set default remoteProgram from program
-        if (args.program && !args.remoteProgram) {
-          args.remoteProgram = "SYS:" + basename(args.program);
+        if (!args.program) {
+          throw new Error("Missing program argument in launch request");
         }
 
         const runOpts: RunOptions = {
@@ -275,8 +273,6 @@ export class UAEDebugSession extends LoggingDebugSession {
           await this.emulator.debug({
             ...runOpts,
             serverPort: args.serverPort,
-            remoteProgram: args.remoteProgram as string,
-            //            sectionOffsets: args.sectionOffsets
           });
         } else {
           await this.emulator.run(runOpts);
@@ -312,23 +308,12 @@ export class UAEDebugSession extends LoggingDebugSession {
       }
       */
 
-      if (!args.remoteProgram) {
-        throw new Error("Missing remoteProgram argument in launch request");
+      let sections: Section[] = [];
+      if (args.mappings) {
+        sections = await parseVlinkMappingsFile(args.mappings);
       }
-      /*
-      // Get info to Initialize source map
-      const [hunks, offsets] = await Promise.all([
-        parseHunksFromFile(args.remoteProgram),
-        this.gdb.getOffsets(), // this doesn't work for a raw code blob (e.g. rom binary) !!!!!!!!!!!!!!!!!!!!!!!!!!
-      ]);
-*/
-      const [hunks] = await Promise.all([
-        parseHunksFromFile(args.remoteProgram),
-      ]);
 
-      // ROM, RAM start addresses - shouldn't be hardcoded!!!
-      const offsets: number[] = [0x0, 0x50000, 0x100000];
-      const sourceMap = new SourceMap(hunks, offsets);
+      const sourceMap = new SourceMap(sections);
 
       // Initialize managers:
       this.variables = new VariableManager(
