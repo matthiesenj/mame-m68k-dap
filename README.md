@@ -4,7 +4,7 @@
 
 No build tools are included with this extension, it only contains the debugging adapter for launching and attaching to the MAME emulator.
 
-Also, given the large size of MAME, it isn't included either, so you should download [Mame](https://www.mamedev.org/) for your platform and reference it using the 'emulatorBin' property in a launch configuration.
+Also, given the large size of MAME, it isn't included either, so you should download [MAME](https://www.mamedev.org/) for your platform and reference it using the 'emulatorBin' property in a launch configuration.
 
 The directory part of the `program` property will be used to set MAME's `-rompath` argument, so put the bios for the target system in the same directory, so MAME will pick it up along with your ROM.
 
