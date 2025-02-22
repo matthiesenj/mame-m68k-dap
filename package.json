@@ -9,7 +9,7 @@
   "bugs": {
     "url": "https://github.com/matthiesenj/mame-m68k-dap/issues"
   },
-  "publisher": "gigabates",
+  "publisher": "matthiesenj",
   "engines": {
     "node": "*",
     "vscode": "^1.84.2"
