@@ -12,11 +12,11 @@ The directory part of the `program` property will be used to set MAME's `-rompat
 
 Debug symbols are fetched from a symbol file (generated during build) - this should be in [vlink](http://sun.hasenbraten.de/vlink/) symbol file format (`-M` argument). 
 
-Note that a fairly ==recent build of vlink is required== for outputting correct symbol files!
+Note that a fairly **recent build of vlink is required** for outputting correct symbol files!
 
 How to compile/assemble, link, and otherwise manipulate the build output, for generating a MAME ROM, is beyond the scope of this document.
 
-## Launch and attach properties
+## Launch and attach configuration properties
 
 | Property | Description | Mandatory | Example |
 |----------|-------------|-----------|---------|
