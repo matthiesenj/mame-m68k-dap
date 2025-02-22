@@ -27,6 +27,7 @@ How to compile/assemble, link, and otherwise manipulate the build output, for ge
 | trace | Enable extra logging | no (defaults to false) | |
 | stopOnEntry | Stop the target after attaching | no (defaults to false) | |
 | emulatorBin | Path to MAME executable | yes[^1] | "C:/Users/JohnDoe/Downloads/mame0273b/mame.exe" |
+| emulatorArgs | Additional MAME options | no | ["-window", "-nomaximize"] |
 | program | Path to ROM folder/zip in build output | yes[^1] | "${workspaceFolder}/build/mslug2" |
 | mappings | Path to vlink symbol file in build output | yes[^2] | "${workspaceFolder}/build/symbols.txt" |
 | serverPort | Listen-port of MAME gdb stub | yes[^2] | 2345 |
