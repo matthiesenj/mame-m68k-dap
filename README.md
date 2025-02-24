@@ -4,7 +4,7 @@
 
 No build tools are included with this extension, it only contains the debugging adapter for launching and attaching to the MAME emulator.
 
-Also, given the large size of MAME, it isn't included either, so you should download [MAME](https://www.mamedev.org/) for your platform and reference it using the 'emulatorBin' property in a launch configuration.
+Also, given the large size of MAME, it isn't included either, so you should download [MAME](https://www.mamedev.org/) for your platform and reference the MAME executable using the 'emulatorBin' property in a launch configuration (or add the parent folder to the OS path).
 
 The directory part of the `program` property will be used to set MAME's `-rompath` argument, so put the bios for the target system in the same directory, so MAME will pick it up along with your ROM.
 
@@ -14,7 +14,7 @@ Debug symbols are fetched from a symbol file (generated during build) - this sho
 
 Note that a fairly **recent build of vlink is required** for outputting correct symbol files!
 
-How to compile/assemble, link, and otherwise manipulate the build output, for generating a MAME ROM, is beyond the scope of this document.
+How to compile/assemble, link, and otherwise manipulate the build output, in order to generate a MAME ROM, is beyond the scope of this document.
 
 ## Launch and attach configuration properties
 
