@@ -26,11 +26,11 @@ How to compile/assemble, link, and otherwise manipulate the build output, in ord
 | noDebug | Launch without debugging | no (defaults to false) | |
 | trace | Enable extra logging | no (defaults to false) | |
 | stopOnEntry | Stop the target after attaching | no (defaults to false) | |
-| emulatorBin | Path to MAME executable | yes[^1] | "C:/Users/JohnDoe/Downloads/mame0273b/mame.exe" |
+| emulatorBin | Path to MAME executable | no[^1] (tries to run "mame" if not specified) | "C:/Users/JohnDoe/Downloads/mame0273b/mame.exe" |
 | emulatorArgs | Additional MAME options | no | ["-window", "-nomaximize"] |
 | program | Path to ROM folder/zip in build output | yes[^1] | "${workspaceFolder}/build/mslug2" |
 | mappings | Path to vlink symbol file in build output | yes[^2] | "${workspaceFolder}/build/symbols.txt" |
 | serverPort | Listen-port of MAME gdb stub | yes[^2] | 2345 |
  
-[^1]: Only for launch configs, not needed for attaching only.
-[^2]: Only for debug configs (`noDebug`: false)
+[^1]: Only relevant for launch requests, attach requests won't try to start the emu.
+[^2]: Only relevant for debug configs (`noDebug`: false)
