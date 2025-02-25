@@ -1,6 +1,6 @@
-# MAME m68k Debug Adapter Protocol
+# MAME m68k Debug Adapter Protocol extension
 
-## This is a work in progress trying to transform Graham Bates' [uae-dap](https://github.com/grahambates/uae-dap) into a MAME debug adapter for Motorola 680xx targets.
+## This is a work in progress trying to transform Graham Bates' [uae-dap](https://github.com/grahambates/uae-dap) into a VS Code MAME debug extension for Motorola 68000 targets.
 
 No build tools are included with this extension, it only contains the debugging adapter for launching and attaching to the MAME emulator.
 
