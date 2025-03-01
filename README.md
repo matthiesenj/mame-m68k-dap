@@ -30,7 +30,7 @@ How to compile/assemble, link, and otherwise manipulate the build output, in ord
 | emulatorArgs | Additional MAME options | no | ["-window", "-nomaximize"] |
 | program | Path to ROM folder/zip in build output | yes[^1] | "${workspaceFolder}/build/mslug2" |
 | mappings | Path to vlink symbol file in build output | yes[^2] | "${workspaceFolder}/build/symbols.txt" |
-| serverPort | Listen-port of MAME gdb stub | yes[^2] | 2345 |
+| serverPort | Listen-port of MAME gdb stub | no[^2] (defaults to 2345) | 6789 |
  
 [^1]: Only relevant for launch requests, attach requests won't try to start the emu.
 [^2]: Only relevant for debug configs (`noDebug`: false)
