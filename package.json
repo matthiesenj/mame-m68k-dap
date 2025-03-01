@@ -185,7 +185,7 @@
             "noDebug": true,
             "program": "${workspaceFolder}/build/myprogram.rom",
             "mappings": "${workspaceFolder}/build/mappings.txt",
-            "emulatorArgs": [],
+            "emulatorArgs": [ "-debug", "-debugger", "none" ],
             "preLaunchTask": "build"
           }
         ],
