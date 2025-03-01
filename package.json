@@ -198,8 +198,8 @@
               "request": "launch",
               "name": "MAME m68k: Debug",
               "stopOnEntry": false,
-              "rom": "^\"\\${workspaceFolder\\}/build/myprogram.rom\"",
-              "mappings": "^\"\\${workspaceFolder\\}/build/mappings.txt\"",
+              "program": "${workspaceFolder/build/myprogram.rom",
+              "mappings": "${workspaceFolder/build/mappings.txt",
               "emulatorArgs": [],
               "preLaunchTask": "build"
             }
