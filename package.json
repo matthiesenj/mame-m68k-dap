@@ -42,6 +42,20 @@
     "mame"
   ],
   "contributes": {
+    "views": {
+      "debug": [
+        {
+          "id": "disassembledMemory",
+          "name": "DISASSEMBLED MEMORY"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "disassembledMemory.setDisassembledMemory",
+        "title": "Set disassembled memory"
+      }
+    ],
     "breakpoints": [
       {
         "language": "m68k"
@@ -185,7 +199,11 @@
             "noDebug": true,
             "program": "${workspaceFolder}/build/myprogram.rom",
             "mappings": "${workspaceFolder}/build/mappings.txt",
-            "emulatorArgs": [ "-debug", "-debugger", "none" ],
+            "emulatorArgs": [
+              "-debug",
+              "-debugger",
+              "none"
+            ],
             "preLaunchTask": "build"
           }
         ],
