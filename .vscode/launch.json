@@ -9,26 +9,11 @@
       "name": "Extension",
       "outFiles": ["${workspaceFolder}/out/**/*.js"],
       "request": "launch",
-      "type": "extensionHost"
-    },
-    {
-      "name": "Server",
-      "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "program": "${workspaceFolder}/src/debugAdapter.ts",
-      "args": ["--server=4711"],
-      "outFiles": ["${workspaceFolder}/out/**/*.js"],
+      "type": "extensionHost",
       "preLaunchTask": {
         "type": "npm",
         "script": "build-dev"
       }
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Extension + Server",
-      "configurations": ["Extension", "Server"]
     }
   ]
 }
